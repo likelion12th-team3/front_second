@@ -3,38 +3,27 @@ import styled from "styled-components";
 import React from "react";
 import Main from "./components/main/Main";
 import { useState, useEffect } from "react";
+import { instance } from "./api/instance";
 
 function App() {
   const [weatherList, setWeatherList] = useState([]);
   const [bgUrl, setBgUrl] = useState("");
 
   const fetchWeatherList = async () => {
-    //     try {
-    //       const res = await instance.get(
-    //         `/board/post-detail/${postid}/comment-list/`
-    //       );
-    setWeatherList([
-      {
-        location: "마포구",
-        temperature: 26.5,
-        woosan: false,
-      },
-      {
-        location: "노원구",
-        temperature: 30.5,
-        woosan: false,
-      },
-    ]);
-    //     } catch (err) {
-    //       alert(err);
-    //     }
+    try {
+      const res = await instance.get("/userdata/users/");
+
+      setWeatherList(res.data[0].locations);
+    } catch (err) {
+      alert(err);
+    }
   };
 
   useEffect(() => {
     fetchWeatherList();
     const isWoosan = weatherList.some((item) => item.woosan === true);
     const bg_url = isWoosan
-      ? "https://get.pxhere.com/photo/cloud-sky-sunlight-atmosphere-weather-storm-cumulus-darkness-overcast-grey-cloudy-sky-depression-meteorological-phenomenon-1092280.jpg"
+      ? "https://cdn.pixabay.com/photo/2020/10/27/09/32/clouds-5690135_1280.jpg"
       : "https://cdn.pixabay.com/photo/2018/08/06/22/55/sun-3588618_1280.jpg";
     setBgUrl(bg_url);
   }, [weatherList]);

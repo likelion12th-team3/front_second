@@ -3,32 +3,19 @@ import React, { useEffect, useState } from "react";
 import { Body3 } from "../../styles/font";
 // import { useParams } from "react-router-dom";
 import WeatherItem from "./WeatherItem";
-// import { instance } from "../../api/instance";
+import { instance } from "../../api/instance";
 
 const WeatherListSection = () => {
   //   const { postid } = useParams();
   const [weatherList, setWeatherList] = useState([]);
 
   const fetchWeatherList = async () => {
-    //     try {
-    //       const res = await instance.get(
-    //         `/board/post-detail/${postid}/comment-list/`
-    //       );
-    setWeatherList([
-      {
-        location: "마포구",
-        temperature: 26.5,
-        woosan: true,
-      },
-      {
-        location: "노원구",
-        temperature: 30.5,
-        woosan: true,
-      },
-    ]);
-    //     } catch (err) {
-    //       alert(err);
-    //     }
+    try {
+      const res = await instance.get("/userdata/users/");
+      setWeatherList(res.data[0].locations);
+    } catch (err) {
+      alert(err);
+    }
   };
 
   useEffect(() => {
@@ -40,10 +27,10 @@ const WeatherListSection = () => {
   return (
     <WeatherListSectionWrapper>
       <div className="weather">
-        {weatherList.map((item) => (
+        {weatherList?.map((item) => (
           <WeatherItem
             key={item.id}
-            location={item.location}
+            location={item.gu_name}
             woosan={item.woosan}
             temperature={item.temperature}
           />

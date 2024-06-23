@@ -3,23 +3,27 @@ import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 import styled from "styled-components";
+import { instance } from "../../api/instance";
 
 const User = () => {
   const [userName, setUserName] = useState("");
 
-  // useEffect(() => {
-  //   axios.get("YOUR_BACKEND_API_URL")
-  //     .then(response => {
-  //       setUserName(response.data.name);
-  //     })
-  //     .catch(error => {
-  //       console.error("Error fetching data:", error);
-  //     });
-  // }, []);
+  const fetchUserName = async () => {
+    try {
+      const res = await instance.get("/userdata/users/");
+      setUserName(res.data[0].name);
+    } catch (err) {
+      alert(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserName();
+  }, []);
 
   return (
     <GreetingContainer>
-      <UserName>서아님</UserName>
+      <UserName>{userName}님</UserName>
       <GreetingMessage>오늘 하루도 화이팅:)</GreetingMessage>
     </GreetingContainer>
   );
@@ -32,7 +36,7 @@ const GreetingContainer = styled.div`
   padding: 10px;
   border-radius: 5px;
   width: 100%;
-  height: 150px;
+  height: 130px;
   margin: 0 auto;
   color: #f9f9f9;
   opacity: 80%;

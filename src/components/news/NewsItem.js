@@ -15,10 +15,11 @@ const NewsItem = ({ title, content, link }) => {
 
 const NewsContainer = styled.div`
   width: 330px;
-  height: 80px;
+  height: auto;
   margin: 0 auto;
   background-color: rgba(255, 255, 255, 0.1);
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   border-radius: 5px;
   border-bottom: solid 1px rgba(255, 255, 255, 0.2);
   padding: 10px;
@@ -30,11 +31,13 @@ const NewsContainer = styled.div`
 const Title = styled.div`
   font-size: 15px;
   color: #f9f9f9;
+  margin-bottom: 10px;
 `;
 
 const Content = styled.div`
   font-size: 10px;
   color: #f9f9f9;
+  margin-bottom: 10px;
 `;
 
 const StyledLink = styled.a`
